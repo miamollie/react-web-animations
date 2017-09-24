@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { ThemeProvider } from 'styled-components'
-import { Button } from './primitives/Button'
 import { Shape } from './primitives/Shape'
 import Animation from './primitives/Animation'
 import { darkTheme } from './styles/themes'
@@ -28,7 +27,6 @@ class App extends Component {
                         <Animation id='myCircle' animation={growKeyframes} options={defaultAnimationOptions} hoverable >
                             <Shape circle />
                         </Animation>
-
                     </div>
                 </ThemeProvider>
             </div>
