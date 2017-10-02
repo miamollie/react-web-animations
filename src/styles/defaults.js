@@ -14,4 +14,14 @@ export const defaults = {
 		font: 'sans-serif',
 		size: '16px',
 	},
+	margins: {
+		small: '15px',
+		medium: '30px',
+		large: '50px',
+	},
+	padding: {
+		small: '10px',
+		medium: '20px',
+		large: '30px',
+	}
 }

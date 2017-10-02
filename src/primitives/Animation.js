@@ -12,10 +12,17 @@ class Animation extends Component {
     }
 
     componentDidMount = () => {
+        console.log(this.props.animation, ' i am the animation')
         // If no trigger defined, play animation by default
         if(!(this.props.clickable || this.props.hoverable)) {
             this.startAnimation()
         }
+    }
+
+    componentDidUpdate = () => {
+        // reset animation
+        // this.stopAnimation()
+        // this.startAnimation()
     }
 
     componentWillUnmount = () => {

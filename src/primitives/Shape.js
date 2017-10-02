@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import {defaults} from '../styles/defaults.js'
+import { defaults } from '../styles/defaults.js'
 
 export const Shape = styled.div`
     margin: 5px;

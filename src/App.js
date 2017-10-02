@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { ThemeProvider } from 'styled-components'
-import { Shape } from './primitives/Shape'
-import Animation from './primitives/Animation'
+import Form from './AnimationForm/Form'
 import { darkTheme } from './styles/themes'
 import {
     fadeInKeyframes,
@@ -15,19 +14,9 @@ class App extends Component {
 
     render() {
         return (
-            <div className='App'>
+            <div style={{maxWidth: '70%', margin: 'auto'}}>
                 <ThemeProvider theme={darkTheme}>
-                    <div>
-                        <Animation id='mySquare' animation={bounceKeyframes} options={defaultAnimationOptions} clickable >
-                            <Shape square />
-                        </Animation>
-                        <Animation id='myImage' animation={fadeInKeyframes} options={fadeAnimationOptions} >
-                            <Shape image={'http://fillmurray.com/250/200'} />
-                        </Animation>
-                        <Animation id='myCircle' animation={growKeyframes} options={defaultAnimationOptions} hoverable >
-                            <Shape circle />
-                        </Animation>
-                    </div>
+                    <Form />
                 </ThemeProvider>
             </div>
         )
