@@ -31,3 +31,17 @@ export const Button = styled.button`
         border-color: ${props.theme.secondary.borderColor};
     `}
 `;
+
+export const DeleteButton = styled.button`
+  border: 2px solid;
+  font-size:  ${defaults.type.size};
+  border-radius: 999px;
+  margin: 5px;
+  height: ${defaults.spacing.smallest};
+  width: ${defaults.spacing.smallest};
+  &:hover,
+  &:focus {
+      opacity: ${0.7};
+      outline: none;
+  }
+`

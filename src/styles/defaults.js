@@ -8,6 +8,7 @@ export const defaults = {
 	colors: {
 		orange: '#ff7e65',
 		grey: '#333333',
+		lightGrey: '#dddddd',
 		white: '#ffffff'
 	},
 	type: {

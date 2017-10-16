@@ -16,4 +16,7 @@ export const Row = styled.div`
             outline: none;
         }
     `}
+    ${props => props.left && `
+      justify-content: flex-end;
+    `}
 `;
