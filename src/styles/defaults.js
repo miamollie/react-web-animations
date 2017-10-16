@@ -9,7 +9,8 @@ export const defaults = {
 		orange: '#ff7e65',
 		grey: '#333333',
 		lightGrey: '#dddddd',
-		white: '#ffffff'
+		white: '#ffffff',
+		black: '#555555',
 	},
 	type: {
 		font: 'sans-serif',
@@ -21,7 +22,7 @@ export const defaults = {
 		large: '50px',
 	},
 	padding: {
-		small: '10px',
+		small: '5px',
 		medium: '20px',
 		large: '30px',
 	}

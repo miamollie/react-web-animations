@@ -5,8 +5,8 @@ import { defaults } from '../styles/defaults.js'
 
 export const Select = styled.select`
   box-sizing: border-box;
-  width:100px;
-  padding:5px;
+  min-width:100px;
+  padding: ${defaults.padding.small};
   -webkit-border-radius:4px;
   -moz-border-radius:4px;
   border-radius:4px;
@@ -21,13 +21,15 @@ export const Select = styled.select`
   cursor:pointer;
   margin: 0 3px;
   text-align: center;
+  -webkit-appearance: menulist-button;
+ height: 50px;
 `
 
 export const Option = styled.option`
   box-sizing: border-box;
-  width:100px;
-  height:40px;
-  padding:5px;
+  min-width:100px;
+  height:50px;
+  padding: ${defaults.padding.small};
   -webkit-border-radius:4px;
   -moz-border-radius:4px;
   border-radius:4px;
@@ -45,9 +47,9 @@ export const Option = styled.option`
 `
 
 export const Input = styled.input`
-  width:100px;
+  min-width:100px;
   height:40px;
-  padding:5px;
+  padding: ${defaults.padding.small};
   -webkit-border-radius:4px;
   -moz-border-radius:4px;
   border-radius:4px;

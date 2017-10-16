@@ -4,7 +4,7 @@ import {defaults} from '../styles/defaults.js'
 
 export const Button = styled.button`
     font-family: ${defaults.type.font};
-    border: 2px solid;
+    border: 2px solid ${defaults.colors.black};
     font-size:  ${defaults.type.size};
     border-radius: 5px;
     margin: 5px;
@@ -33,7 +33,7 @@ export const Button = styled.button`
 `;
 
 export const DeleteButton = styled.button`
-  border: 2px solid;
+  border: 2px solid ${defaults.colors.black};
   font-size:  ${defaults.type.size};
   border-radius: 999px;
   margin: 5px;

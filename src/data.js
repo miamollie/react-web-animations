@@ -1,7 +1,7 @@
 export const keyframeOptionsAndValues = {
 	//length  as number+unitpixel/em or percentage %, number, RealNum, angle(as degree or radian)
 	// matrix transforms currently unsupported, TODO improvement (better validation of transform values)
-	// TODO display all this info  as a modal?
+	// TODO display all this info  as a modal? if required... Use the values as a hint ( if using for a hint, rewrite to make more clear)
 	transform: {
 		 translate: ['length', 'length'],
 		 translateX: 'length',
@@ -24,11 +24,16 @@ export const keyframeOptionsAndValues = {
 		 perspective: 'length',
 	},
 	opacity: 'real',
-	// color: [ open a color picker...] TODO add colour picker
+	// color: [ open a colour picker...] TODO add colour picker
 }
 
 export const animationOptionsAndValues = {
+	delay: 'number',
+	direction: ['normal', 'reverse', 'alternate', 'alternate-reverse'],
 	duration: 'number',
 	easing: 'string',
+	endDelay: 'number',
+	fille: ['backwards', 'forwards', 'both', 'none'],
 	iterations: 'string',
+	iterationStart: ['number', 'Infinity'],
 }

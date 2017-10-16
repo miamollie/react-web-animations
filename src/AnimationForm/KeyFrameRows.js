@@ -2,13 +2,11 @@ import React, { Component } from 'react'
 import { Row } from '../primitives/Row'
 import { Button, DeleteButton } from '../primitives/Button'
 import { Input, Select, Option } from '../primitives/Inputs'
-import { Block } from '../primitives/Block'
 import { keyframeOptionsAndValues } from '../data'
 import { Transforms, Opacity  } from './Animatables'
 
 export const KeyFrameRows = ({keyframes, onChange, addKeyframe, removeKeyframe}) =>  (
-	<Block>
-		<Row>Keyframes</Row>
+	<div>
 			{keyframes.map((keyframe, index) =>
 				<KeyFrameInputRow
 					onChange={onChange}
@@ -22,7 +20,7 @@ export const KeyFrameRows = ({keyframes, onChange, addKeyframe, removeKeyframe})
 			<Row left>
 				<Button type='button' onClick={addKeyframe}>Add keyframe</Button>
 			</Row>
-	</Block>
+	</div>
 )
 
 class KeyFrameInputRow extends Component {

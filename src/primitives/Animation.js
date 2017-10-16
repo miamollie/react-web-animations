@@ -63,13 +63,13 @@ class Animation extends Component {
 
     render() {
         return (
-            <div id={this.props.id}
-                style={{display: 'inline-block'}}
-                onClick={this.props.clickable && this.toggleAnimation}
-                onMouseEnter={this.props.hoverable && this.startAnimation}
-                onMouseLeave={this.props.hoverable && this.stopAnimation}>
-                {this.props.children}
-            </div>
+          <div id={this.props.id}
+              style={{display: 'inline-block'}}
+              onClick={this.props.clickable && this.toggleAnimation}
+              onMouseEnter={this.props.hoverable && this.startAnimation}
+              onMouseLeave={this.props.hoverable && this.stopAnimation}>
+              {this.props.children}
+          </div>
         )
     }
 }

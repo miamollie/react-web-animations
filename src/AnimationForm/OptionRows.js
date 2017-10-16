@@ -1,22 +1,51 @@
 import React, { Component } from 'react'
 import { Row } from '../primitives/Row'
-import { Block } from '../primitives/Block'
+import { Input } from '../primitives/Inputs'
 import { animationOptionsAndValues as availableOptions} from '../data'
 
-// pull available options from data but use state for values
-export const OptionRows = (onChange, options) => {
+export const OptionRows = ({onChange, options}) => {
 	return (
-		<Block>
-			<Row>Options</Row>
+		<div>
 			{Object.keys(availableOptions).map((option, index) =>
-							<Row focusable>
-								<label htmlFor={option}>{option}</label>
-								<input
-									value={'option == props.option && props.option.value ? props.value : \'\''}
-									onChange={onChange}
-									key={index} />
-							</Row>
-						)}
-		</Block>
+					<Row focusable key={index}>
+						<label htmlFor={option}>{option}</label>
+						<Option
+							id={index}
+							value={options[option] || ''}
+							onChange={() => onChange(option)}
+							key={index} />
+					</Row>
+				)}
+		</div>
 	)
+}
+
+
+class Option extends Component {
+	constructor(props){
+		super(props)
+		this.state = {
+			value: props.value,
+		}
+	}
+
+	onChange = e => {
+		this.setState({
+			value: e.target.value,
+		}, () => this.props.onChange(this.state.value))
+
+	}
+
+	render() {
+
+		return (
+			<Input
+				id={this.props.id}
+				value={this.state.value}
+				onChange={this.onChange}
+			/>
+		)
+	}
+
+
 }
