@@ -13,7 +13,7 @@ class Form extends Component {
 		super()
 		this.state = {
 			keyframes: [
-				{opacity: 0, offset: ''},
+				{opacity: 0, offset: 0},
 			],
 			options: {
 				duration: 3000,
@@ -38,7 +38,7 @@ class Form extends Component {
 		// clear the animation from state and unmount the animation
 		this.setState({
 			keyframes: [
-				{opacity: 0, offset: ''},
+				{opacity: 0, offset: 0},
 			],
 			options: {
 				duration: 3000,
@@ -74,7 +74,7 @@ class Form extends Component {
 
 	addKeyframe = () => {
 		// add an empty row onto the end of the keyframe array
-		const blankKeyframe = {opacity: 0, offset: ''}
+		const blankKeyframe = {opacity: 0, offset: 0}
 
 		this.setState({
 			keyframes: [

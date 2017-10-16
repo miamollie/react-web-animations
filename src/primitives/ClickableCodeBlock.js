@@ -38,7 +38,6 @@ class ClickableCodeBlock extends Component {
     window.getSelection().addRange(range)
 
       try {
-        // Now that we've selected the anchor text, execute the copy command
         const successful = document.execCommand('copy')
         const msg = successful ? 'Copied' : 'Unable to copy'
         this.setCopyAttempted(msg)
@@ -47,8 +46,6 @@ class ClickableCodeBlock extends Component {
         this.setCopyAttempted('Error: ' + err)
       }
 
-    // Remove the selections - NOTE: Should use
-    // removeRange(range) when it is supported
     window.getSelection().removeAllRanges()
   }
 

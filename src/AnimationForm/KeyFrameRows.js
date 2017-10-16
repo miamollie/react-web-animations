@@ -4,6 +4,7 @@ import { Button, DeleteButton } from '../primitives/Button'
 import { Input, Select, Option } from '../primitives/Inputs'
 import { Block } from '../primitives/Block'
 import { keyframeOptionsAndValues } from '../data'
+import { Transforms, Opacity  } from './Animatables'
 
 export const KeyFrameRows = ({keyframes, onChange, addKeyframe, removeKeyframe}) =>  (
 	<Block>
@@ -40,17 +41,18 @@ class KeyFrameInputRow extends Component {
 		}, this.props.onChange(this.props.index, e.target.value, this.state.value, this.props.offset))
 	}
 
-	onValueChange = e => {
+	onValueChange = value => {
 		this.setState({
-			value: e.target.value,
-		}, this.props.onChange(this.props.index, this.state.option, e.target.value, this.props.offset))
+			value: value,
+		}, this.props.onChange(this.props.index, this.state.option, value, this.props.offset))
 	}
 
 	onNumericChange = e => {
-		const numericValue = parseFloat(e.target.value)
-		this.setState({
-			value: numericValue,
-		}, this.props.onChange(this.props.index, this.state.option, numericValue, this.props.offset))
+		console.log('here')
+		// const value = parseFloat(e.target.value)
+		// this.setState({
+		// 	value: value,
+		// }, this.props.onChange(this.props.index, this.state.option, value, this.props.offset))
 	}
 
 	onOffsetChange = e => {
@@ -72,15 +74,6 @@ class KeyFrameInputRow extends Component {
 		</Select>
 	)
 
-
-	onNestedValueChange = e => {
-		const smushedValue =
-		this.setState({
-			value: smushedValue,
-		}, this.props.onChange(this.props.index, this.state.option, e.target.value, this.props.offset))
-
-	}
-
 	renderKeyFrameValues = () => {
 		return (
 			Object.keys(keyframeOptionsAndValues).map(option => {
@@ -93,25 +86,15 @@ class KeyFrameInputRow extends Component {
 
 	renderOptionValues = option => {
 		const id = `keyFrameValue${this.props.index}`
-		const onChange = this.onValueChange
-		const value = this.state.value
 		switch (option) {
 			case 'opacity' :
-				return <Input id={id} type='number' step="any" key={id} onChange={this.onNumericChange} value={value} min='0' max='1' />
+				return <Opacity id={id} key={id} onChange={this.onNumericChange} value={this.state.value} />
 			case 'transform' :
-				return (
-					<div key={id}>
-						<Select id={id} onChange={onChange} value={value}>
-							{Object.keys(keyframeOptionsAndValues['transform']).map((keyframeOption) => (
-								<Option key={keyframeOption} onChange={this.onNestedValueChange}>{keyframeOption}</Option>
-							))}
-						</Select>
-						<Input onChange={this.onNestedValueChange} value={this.state.subValue}/>
-					</div>
-				)
+				return <Transforms id={id} key={id} onChange={this.onValueChange} value={this.state.value} />
 			case 'color' :
 				return (
 					console.log('add a color picker')
+					// <ColourPicker />
 				)
 			default :
 				return null
@@ -121,7 +104,7 @@ class KeyFrameInputRow extends Component {
 	render() {
 		const { index } = this.props
 		return (
-			<Row focusable key={index}>				
+			<Row focusable key={index}>
 				{/* <label style={index === 0 ? {display: 'block'} : {display: 'none'} } htmlFor={`keyFrameProperty${index}`}>Property *</label> */}
 				{this.renderKeyframeOptions()}
 				{/* <label style={index === 0 ? {display: 'block'} : {display: 'none'} } htmlFor={`keyFrameValue${index}`}>Value *</label> */}
@@ -134,6 +117,6 @@ class KeyFrameInputRow extends Component {
 	}
 }
 
-{/* Tooltip for offset, if you leave it blank it will evenly space the   */}
+{/*  TODO handle offset, if you leave it blank it will evenly space the animations ... or should it be a checkbox  */}
 {/* TODO add validation error appropriate to the property */}
-{/*  TODO make draggable so you can put them in the order you want https://github.com/StreakYC/react-draggable-list*/}
+{/*  TODO make draggable so you can put them in the order you want https://github.com/StreakYC/react-draggable-list what should happen to the times...?  */}
