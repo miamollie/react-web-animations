@@ -48,11 +48,10 @@ class KeyFrameInputRow extends Component {
 	}
 
 	onNumericChange = e => {
-		console.log('here')
-		// const value = parseFloat(e.target.value)
-		// this.setState({
-		// 	value: value,
-		// }, this.props.onChange(this.props.index, this.state.option, value, this.props.offset))
+		const value = parseFloat(e.target.value)
+		this.setState({
+			value: value,
+		}, this.props.onChange(this.props.index, this.state.option, value, this.props.offset))
 	}
 
 	onOffsetChange = e => {
@@ -90,7 +89,7 @@ class KeyFrameInputRow extends Component {
 			case 'opacity' :
 				return <Opacity id={id} key={id} onChange={this.onNumericChange} value={this.state.value} />
 			case 'transform' :
-				return <Transforms id={id} key={id} onChange={this.onValueChange} value={this.state.value} />
+				return <Transforms id={id} key={id} onChange={this.onValueChange} />
 			case 'color' :
 				return (
 					console.log('add a color picker')

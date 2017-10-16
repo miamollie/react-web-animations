@@ -9,27 +9,26 @@ export class Transforms extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			option: props.option ? props.option : '',
-			value: props.value ? props.value : '',
-			smushedValue: `${props.option}: ${props.value}`,
+			option: '',
+			value: '',
 		}
 	}
 
 	onInputChange = e => {
 		this.setState({
 			value: e.target.value,
-		}, () => this.props.onChange(this.state.smushedValue))
+		}, () => this.props.onChange(`${this.state.option}(${this.state.value})`))
 	}
 
 	onSelectChange = e => {
 		this.setState({
-			value: e.target.value,
-		}, () => this.props.onChange(this.state.smushedValue))
+			option: e.target.value,
+		}, () => this.props.onChange(`${this.state.option}(${this.state.value})`))
 	}
 
 
 	render() {
-		const {value, id} = this.props
+		const {id} = this.props
 		return (
 			<span>
 				<Select id={id} onChange={this.onSelectChange} value={this.state.option}>
@@ -37,14 +36,13 @@ export class Transforms extends Component {
 						<Option key={keyframeOption}>{keyframeOption}</Option>
 					))}
 				</Select>
-				<Input onChange={this.onSelectChange} value={this.state.value}/>
+				<Input onChange={this.onInputChange} value={this.state.value}/>
 			</span>
 		)
 	}
-
 }
 
-export const Opacity = (onChange, value, id) => (
+export const Opacity = ({onChange, value, id}) => (
 		<Input
 			id={id}
 			type='number'
