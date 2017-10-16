@@ -12,39 +12,34 @@ class Animation extends Component {
     }
 
     componentDidMount = () => {
-        console.log(this.props.animation, ' i am the animation')
+        console.log('Mounted with keyframes')
         // If no trigger defined, play animation by default
         if(!(this.props.clickable || this.props.hoverable)) {
             this.startAnimation()
         }
     }
 
-    componentDidUpdate = () => {
-        // reset animation
-        // this.stopAnimation()
-        // this.startAnimation()
-    }
-
     componentWillUnmount = () => {
-        if(this.props.animation && this.props.animating) {
+      console.log('Unmounting')
+        if(this.props.keyframes && this.props.animating) {
             this.stopAnimation()
         }
     }
 
 	startAnimation = () => {
-        const {id, animation, options} = this.props
         if(!this.state.animating && this.state.animation) {
-            this.state.animation.play()
             this.setState({
                 animating: true,
-            })
+            }, () => this.state.animation.play())
 
         } else {
-            if (id && animation && options) {
+            const {id, keyframes, options} = this.props
+            if (id && keyframes && options) {
+              console.log(keyframes, options, 'starting')
                 this.setState({
-                    animation: document.querySelector(`#${id}`).animate(animation, options),
+                    animation: document.querySelector(`#${id}`).animate(keyframes, options),
                     animating: true,
-                })
+                }, () => this.state.animation.play())
             }
         }
 	}
@@ -83,7 +78,7 @@ export default Animation
 
 Animation.PropTypes = {
     id: PropTypes.string.required,
-    animation: PropTypes.object.required,
+    keyframes: PropTypes.object.required,
     options: PropTypes.object.required,
     clickable: PropTypes.boolean,
     hoverable: PropTypes.boolean

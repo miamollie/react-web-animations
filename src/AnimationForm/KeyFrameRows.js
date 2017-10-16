@@ -1,43 +1,10 @@
 import React, { Component } from 'react'
 import { Row } from '../primitives/Row'
+import { Button, DeleteButton } from '../primitives/Button'
 import { Block } from '../primitives/Block'
+import { keyframeOptionsAndValues } from '../data'
 
-const keyframeOptionsAndValues = {
-	//length  as number+unitpixel/em or percentage %, number, RealNum, angle(as degree or radian)
-	// matrix transforms currently unsupported, TODO improvement (better validation of transform values)
-	// TODO display all this info  as a modal?
-	transform: {
-		 translate: ['length', 'length'],
-		 translateX: 'length',
-		 translateY: 'length',
-		 scale: ['number', 'number'],
-		 scaleX: 'number',
-		 scaleY: 'number',
-		 rotate: 'number',
-		 skew: ['angle', 'angle'],
-		 skewX: 'angle',
-		 skewY: 'angle',
-		 translate3d: ['length', 'length', 'length'],
-		 translateZ: 'length',
-		 scale3d: ['number', 'number', 'number'],
-		 scaleZ: 'number',
-		 rotate3d: ['number', 'number', 'number', 'angle'],
-		 rotateX: 'angle',
-		 rotateY: 'angle',
-		 rotateZ: 'angle',
-		 perspective: 'length',
-	},
-	opacity: 'real',
-	// color: [ open a color picker...] TODO add colour picker
-}
-
-// tracks adding and removing rows, and the state of the keyframes object
-// should know about all animateable properties and potential values for them
-// renderRows
-// addRow (adds a new row with default values, updates the form state to update keyframes array)
-// removeRow (for rows in state, return KeyFrameInputRow with an Onchange that updates this state)
-// updateRow(index) => (option, value) => {}
-export const KeyFrameInputRows = ({keyframes, onChange}) =>  (
+export const KeyFrameRows = ({keyframes, onChange, addKeyframe, removeKeyframe}) =>  (
 	<Block>
 		<Row>Keyframes</Row>
 			{keyframes.map((keyframe, index) =>
@@ -46,23 +13,15 @@ export const KeyFrameInputRows = ({keyframes, onChange}) =>  (
 					option={Object.keys(keyframe)[0]}
 					value={keyframe[Object.keys(keyframe)[0]]}
 					offset={keyframe[Object.keys(keyframe)[1]]}
+					removeRow={removeKeyframe}
 					key={index}
 					index={index} />
 			)}
+			<Row left>
+				<Button type='button' onClick={addKeyframe}>Add keyframe</Button>
+			</Row>
 	</Block>
 )
-
-
-
-// should know about all options and permissable properties for them
-export const OptionInputRows = () => {
-	return (
-		<Block>
-			<Row>Options</Row>
-			Alll the options here
-		</Block>
-	)
-}
 
 class KeyFrameInputRow extends Component {
 	constructor(props) {
@@ -86,10 +45,18 @@ class KeyFrameInputRow extends Component {
 		}, this.props.onChange(this.props.index, this.state.option, e.target.value, this.props.offset))
 	}
 
-	onOffsetChange = e => {
+	onNumericChange = e => {
+		const numericValue = parseFloat(e.target.value)
 		this.setState({
-			offset: e.target.value,
-		}, this.props.onChange(this.props.index, this.state.option, this.state.value, e.target.value))
+			value: numericValue,
+		}, this.props.onChange(this.props.index, this.state.option, numericValue, this.props.offset))
+	}
+
+	onOffsetChange = e => {
+		const numericValue = parseFloat(e.target.value)
+		this.setState({
+			offset: numericValue,
+		}, this.props.onChange(this.props.index, this.state.option, this.state.value, numericValue))
 	}
 
 	renderKeyframeOptions = () =>  (
@@ -97,7 +64,7 @@ class KeyFrameInputRow extends Component {
 			id={`keyFrameProperty${this.props.index}`}
 			value={this.state.option}
 			onChange={this.onOptionChange}>
-			{Object.keys(keyframeOptionsAndValues).map((keyframeOption) => (
+			{Object.keys(keyframeOptionsAndValues).map(keyframeOption => (
 				<option key={keyframeOption}>
 					{keyframeOption}
 				</option>))}
@@ -106,16 +73,20 @@ class KeyFrameInputRow extends Component {
 
 
 	onNestedValueChange = e => {
-		// smoosh the values together...?
+		const smushedValue = parseFloat(e.target.value)
+		this.setState({
+			value: smushedValue,
+		}, this.props.onChange(this.props.index, this.state.option, e.target.value, this.props.offset))
+
 	}
 
 	renderKeyFrameValues = () => {
 		return (
-			Object.keys(keyframeOptionsAndValues).map((option) => {
-	   			if (option === this.state.option) {
-	   				return this.renderOptionValues(option)
-	   			}
-	   		}
+			Object.keys(keyframeOptionsAndValues).map(option => {
+   			if (option === this.state.option) {
+   				return this.renderOptionValues(option)
+   			}
+   		}
 		))
 	}
 
@@ -125,7 +96,7 @@ class KeyFrameInputRow extends Component {
 		const value = this.state.value
 		switch (option) {
 			case 'opacity' :
-				return <input id={id} type='tel' key={id} onChange={onChange} value={value} min='0' max='1' />
+				return <input id={id} type='number' step="any" key={id} onChange={this.onNumericChange} value={value} min='0' max='1' />
 			case 'transform' :
 				return (
 					<div key={id}>
@@ -137,6 +108,10 @@ class KeyFrameInputRow extends Component {
 						<input onChange={this.onNestedValueChange}></input>
 					</div>
 				)
+			case 'color' :
+				return (
+					console.log('add a color picker')
+				)
 			default :
 				return null
 		}
@@ -144,23 +119,20 @@ class KeyFrameInputRow extends Component {
 
 	render() {
 		const { index } = this.props
-		console.log(this.state, 'keyframe row state')
 		return (
-			<div key={index}>
-				<Row focusable>
-					<label htmlFor={`keyFrameProperty${index}`}>CSS property *</label>
-					{this.renderKeyframeOptions()}
-					<label htmlFor={`keyFrameValue${index}`}>Value *</label>
-					{this.renderKeyFrameValues()}
-					<label htmlFor={`keyFrameOffset${index}`}>Offset</label>
-					<input id={`keyFrameOffset${index}`} type="number" value={this.state.offset} onChange={this.onOffsetChange}/>
-					{/* TODO add vadivdation error appropriate to the property */}
-					{/*  TODO make draggable so you can put them in the order you want https://github.com/StreakYC/react-draggable-list*/}
-				</Row>
-				{index > 1 && (
-					<button onClick={this.props.removeRow}>Remove Row</button>
-				)}
-			</div>
+			<Row focusable key={index}>
+				{/* <label style={index === 0 ? {display: 'block'} : {display: 'none'} } htmlFor={`keyFrameProperty${index}`}>Property *</label> */}
+				{this.renderKeyframeOptions()}
+				{/* <label style={index === 0 ? {display: 'block'} : {display: 'none'} } htmlFor={`keyFrameValue${index}`}>Value *</label> */}
+				{this.renderKeyFrameValues()}
+				{/* <label style={index === 0 ? {display: 'block'} : {display: 'none'} } htmlFor={`keyFrameOffset${index}`}>Offset</label> */}
+				<input id={`keyFrameOffset${index}`} type="number" step="any" min="0" value={this.state.offset} onChange={this.onOffsetChange}/>
+				<DeleteButton type='button' onClick={() => this.props.removeRow(index)}>X</DeleteButton>
+			</Row>
 		)
 	}
 }
+
+{/* Tooltip for offset, if you leave it blank it will evenly space the   */}
+{/* TODO add validation error appropriate to the property */}
+{/*  TODO make draggable so you can put them in the order you want https://github.com/StreakYC/react-draggable-list*/}

@@ -2,13 +2,6 @@ import React, { Component } from 'react'
 import { ThemeProvider } from 'styled-components'
 import Form from './AnimationForm/Form'
 import { darkTheme } from './styles/themes'
-import {
-    fadeInKeyframes,
-    defaultAnimationOptions,
-    bounceKeyframes,
-    growKeyframes,
-    fadeAnimationOptions,
-} from './styles/animations'
 
 class App extends Component {
 
