@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import {defaults} from '../styles/defaults.js'
+import { Row } from './Row'
+
 
 export const CodeBlock = styled.code`
     margin-bottom: ${defaults.margins.medium};
@@ -8,6 +10,7 @@ export const CodeBlock = styled.code`
     border-bottom: 1px solid grey;
     background-color: ${defaults.colors.lightGrey};
     cursor: pointer;
+    max-width: 450px;
 `;
 
 
@@ -32,14 +35,15 @@ class ClickableCodeBlock extends Component {
   }
 
   clickToCopy = () => {
-    const clickTarget = document.querySelector(`${this.props.id}`)
+    const clickTarget = document.querySelector(`#${this.props.id}`)
+
     const range = document.createRange()
     range.selectNode(clickTarget)
     window.getSelection().addRange(range)
 
       try {
         const successful = document.execCommand('copy')
-        const msg = successful ? 'Copied' : 'Unable to copy'
+        const msg = successful ? 'Copied!' : 'Error: Unable to copy'
         this.setCopyAttempted(msg)
       } catch(err) {
         console.log('Oops, unable to copy')
@@ -51,15 +55,17 @@ class ClickableCodeBlock extends Component {
 
   render() {
     return (
-      <div>
-        <CodeBlock onClick={this.clickToCopy} id={this.props.id}>
+      <Row>
+        <CodeBlock
+          onClick={this.clickToCopy}
+          id={this.props.id}
+        >
           {this.props.value}
-
         </CodeBlock>
         {this.state.success && (
-          <p>Copied!</p> //make a nicer success message...
+          <p>{this.state.msg}</p>
         )}
-      </div>
+      </Row>
     )
   }
 }

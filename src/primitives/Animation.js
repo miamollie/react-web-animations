@@ -26,7 +26,7 @@ class Animation extends Component {
         }
     }
 
-	startAnimation = () => {
+  	startAnimation = () => {
         if(!this.state.animating && this.state.animation) {
             this.setState({
                 animating: true,
@@ -42,7 +42,7 @@ class Animation extends Component {
                 }, () => this.state.animation.play())
             }
         }
-	}
+  	}
 
     stopAnimation = () => {
         if (this.state.animation && this.state.animating) {

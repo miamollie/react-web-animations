@@ -30,10 +30,6 @@ class Form extends Component {
 		this.buildAnimation()
 	}
 
-	pause = () => {
-		//pause the animation...
-	}
-
 	reset = () => {
 		// clear the animation from state and unmount the animation
 		this.setState({
@@ -50,8 +46,6 @@ class Form extends Component {
 	}
 
 	toggleCodeVisibility = () => {
-
-		this.buildAnimation()
 		this.setState({
 			codeVisible: !this.state.codeVisible,
 		})
@@ -131,7 +125,6 @@ class Form extends Component {
 									{/* ANIMATION CONTROLS */}
 									<Row>
 										<Button primary type="button" onClick={this.play}>Play</Button>
-										<Button secondary type="button" onClick={this.pause}>Pause</Button>
 										<Button secondary type="button" onClick={this.toggleCodeVisibility}>
 											{this.state.codeVisible ? 'Hide' : 'Show'} Code
 										</Button>
@@ -140,7 +133,12 @@ class Form extends Component {
 
 									{this.state.codeVisible && (
 										<Block>
-											<ClickableCodeBlock value={this.state.animation} />
+											<ClickableCodeBlock
+												id="showCode"
+												value={`
+													${JSON.stringify(this.state.keyframes)}
+
+												 	${JSON.stringify(this.state.options)}`} />
 										</Block>
 									)}
 
