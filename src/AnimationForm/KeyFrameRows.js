@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Row } from '../primitives/Row'
 import { Button, DeleteButton } from '../primitives/Button'
+import { Input, Select, Option } from '../primitives/Inputs'
 import { Block } from '../primitives/Block'
 import { keyframeOptionsAndValues } from '../data'
 
@@ -60,20 +61,20 @@ class KeyFrameInputRow extends Component {
 	}
 
 	renderKeyframeOptions = () =>  (
-		<select
+		<Select
 			id={`keyFrameProperty${this.props.index}`}
 			value={this.state.option}
 			onChange={this.onOptionChange}>
 			{Object.keys(keyframeOptionsAndValues).map(keyframeOption => (
-				<option key={keyframeOption}>
+				<Option key={keyframeOption}>
 					{keyframeOption}
-				</option>))}
-		</select>
+				</Option>))}
+		</Select>
 	)
 
 
 	onNestedValueChange = e => {
-		const smushedValue = parseFloat(e.target.value)
+		const smushedValue =
 		this.setState({
 			value: smushedValue,
 		}, this.props.onChange(this.props.index, this.state.option, e.target.value, this.props.offset))
@@ -96,16 +97,16 @@ class KeyFrameInputRow extends Component {
 		const value = this.state.value
 		switch (option) {
 			case 'opacity' :
-				return <input id={id} type='number' step="any" key={id} onChange={this.onNumericChange} value={value} min='0' max='1' />
+				return <Input id={id} type='number' step="any" key={id} onChange={this.onNumericChange} value={value} min='0' max='1' />
 			case 'transform' :
 				return (
 					<div key={id}>
-						<select id={id} onChange={onChange} value={value}>
+						<Select id={id} onChange={onChange} value={value}>
 							{Object.keys(keyframeOptionsAndValues['transform']).map((keyframeOption) => (
-								<option key={keyframeOption} onChange={this.onNestedValueChange}>{keyframeOption}</option>
+								<Option key={keyframeOption} onChange={this.onNestedValueChange}>{keyframeOption}</Option>
 							))}
-						</select>
-						<input onChange={this.onNestedValueChange}></input>
+						</Select>
+						<Input onChange={this.onNestedValueChange} value={this.state.subValue}/>
 					</div>
 				)
 			case 'color' :
@@ -120,13 +121,13 @@ class KeyFrameInputRow extends Component {
 	render() {
 		const { index } = this.props
 		return (
-			<Row focusable key={index}>
+			<Row focusable key={index}>				
 				{/* <label style={index === 0 ? {display: 'block'} : {display: 'none'} } htmlFor={`keyFrameProperty${index}`}>Property *</label> */}
 				{this.renderKeyframeOptions()}
 				{/* <label style={index === 0 ? {display: 'block'} : {display: 'none'} } htmlFor={`keyFrameValue${index}`}>Value *</label> */}
 				{this.renderKeyFrameValues()}
 				{/* <label style={index === 0 ? {display: 'block'} : {display: 'none'} } htmlFor={`keyFrameOffset${index}`}>Offset</label> */}
-				<input id={`keyFrameOffset${index}`} type="number" step="any" min="0" value={this.state.offset} onChange={this.onOffsetChange}/>
+				<Input id={`keyFrameOffset${index}`} type="number" step="any" min="0" value={this.state.offset} onChange={this.onOffsetChange}/>
 				<DeleteButton type='button' onClick={() => this.props.removeRow(index)}>X</DeleteButton>
 			</Row>
 		)
